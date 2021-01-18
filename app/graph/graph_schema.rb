@@ -15,13 +15,16 @@ type Query {
 type Author {
   name: String
 
-  books(
+  books_lazy: [Book]
+
+  books_connection(
     after: String
     before: String
     first: Int
     last: Int
   ): BookConnection
-  books_lazy(
+
+  books_lazy_connection(
     after: String
     before: String
     first: Int

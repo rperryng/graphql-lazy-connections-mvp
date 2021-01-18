@@ -16,25 +16,21 @@ class SchemaImplementation
 
     result
 
-    # if field.connection?
-    #   to_connection(result, args, ctx)
-    # else
-    #   result
-    # end
+    if field.connection?
+      connection_class = ctx.schema.connections.wrapper_for(result)
+
+      if connection_class.nil?
+        raise StandardError "Didn't know how to wrap #{result.class} into connection"
+      end
+
+      constructor_args = args.merge({ context: ctx })
+      connection_class.new(result, **constructor_args)
+    else
+      result
+    end
   end
 
   private
-
-  def to_connection(result, args, ctx)
-    connection_class = ctx.schema.connections.wrapper_for(result)
-
-    if connection_class.nil?
-      raise StandardError "Didn't know how to wrap #{result.class} into connection"
-    end
-
-    constructor_args = args.merge({ context: ctx })
-    connection_class.new(result, **constructor_args)
-  end
 
   def to_resolver(obj)
     # crude workaround for example's sake.
@@ -54,7 +50,6 @@ class SchemaImplementation
   end
 
   def resolve_method(method_name, obj, _args, _ctx)
-    binding.pry if obj.nil?
     method_arity = obj.method(method_name).arity
 
     case method_arity

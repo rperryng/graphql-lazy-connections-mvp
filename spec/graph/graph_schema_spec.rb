@@ -3,6 +3,8 @@ describe GraphSchema do
     subject { GraphSchema.execute(query, variables) }
 
     before do
+      ActiveRecord::Base.logger = Logger.new(STDOUT)
+
       madeline_miller, frank_herbert = Author.create([
         { name: 'Madeline Miller' },
         { name: 'Frank Herbert' },
@@ -27,13 +29,17 @@ describe GraphSchema do
       }])
     end
 
-    let(:query) do
-      <<~GQL
+    let(:query) { raise NotImplementedError }
+    let(:variables) { {} }
+
+    context 'books_connection' do
+      let(:query) do
+        <<~GQL
         query testQuery {
           authors(first: 2) {
             nodes {
               name
-              books {
+              books_connection {
                 nodes {
                   title
                 }
@@ -41,20 +47,58 @@ describe GraphSchema do
             }
           }
         }
-      GQL
-    end
+        GQL
+      end
 
-    let(:variables) { {} }
-
-    context 'n+1 request' do
       it 'makes n+1 requests' do
-        ActiveRecord::Base.logger = Logger.new(STDOUT)
         subject
       end
     end
 
-    context 'lazy' do
-      # ???
+    context 'books_lazy' do
+      let(:query) do
+        <<~GQL
+        query testQuery {
+          authors(first: 2) {
+            nodes {
+              name
+              books_lazy {
+                title
+              }
+            }
+          }
+        }
+        GQL
+      end
+
+      it 'makes 1 query' do
+        # The resolved object is a little borked, but only 1 query is performed based on the logs
+        subject
+      end
+    end
+
+    context 'books_lazy_connection' do
+      let(:query) do
+        <<~GQL
+        query testQuery {
+          authors(first: 2) {
+            nodes {
+              name
+              books_lazy_connection {
+                nodes {
+                  title
+                }
+              }
+            }
+          }
+        }
+        GQL
+      end
+
+      it 'makes 1 query' do
+        # Can't resolve.
+        subject
+      end
     end
   end
 end
