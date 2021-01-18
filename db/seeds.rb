@@ -1,4 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
+# Twhis file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
 # Examples:
@@ -27,30 +27,4 @@ bad_beginning, reptile_room, dune, dune_messiah = Book.create([{
   author: frank_herbert,
   title: 'Dune Messiah',
   published_at: DateTime.parse("1969-01-01T00:00:00-05:00")
-}])
-
-Review.create([{
-  book: bad_beginning,
-  score: 1,
-}, {
-  book: bad_beginning,
-  score: 2,
-}, {
-  book: reptile_room,
-  score: 3,
-}, {
-  book: reptile_room,
-  score: 4,
-}, {
-  book: dune,
-  score: 5,
-}, {
-  book: dune,
-  score: 6,
-}, {
-  book: dune_messiah,
-  score: 7,
-}, {
-  book: dune_messiah,
-  score: 8,
 }])

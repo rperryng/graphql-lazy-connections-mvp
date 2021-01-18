@@ -30,12 +30,4 @@ ActiveRecord::Schema.define(version: 2021_01_18_023147) do
     t.index ["author_id"], name: "index_books_on_author_id"
   end
 
-  create_table "reviews", force: :cascade do |t|
-    t.bigint "book_id"
-    t.integer "score", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["book_id"], name: "index_reviews_on_book_id"
-  end
-
 end
