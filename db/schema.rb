@@ -16,26 +16,26 @@ ActiveRecord::Schema.define(version: 2021_01_18_023147) do
   enable_extension "plpgsql"
 
   create_table "authors", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "books", force: :cascade do |t|
     t.bigint "author_id"
-    t.bigint "publisher_id"
-    t.string "title"
-    t.datetime "published_at"
+    t.string "title", null: false
+    t.datetime "published_at", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["author_id"], name: "index_books_on_author_id"
-    t.index ["publisher_id"], name: "index_books_on_publisher_id"
   end
 
-  create_table "publishers", force: :cascade do |t|
-    t.string "name"
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "book_id"
+    t.integer "score", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_reviews_on_book_id"
   end
 
 end
