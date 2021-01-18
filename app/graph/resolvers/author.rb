@@ -8,10 +8,10 @@ module Resolvers
     end
 
     def books_lazy
-      BatchLoader::GraphQL.for(author.id).batch do |author_ids, loader|
+      BatchLoader::GraphQL.for(author.id).batch(default_value: []) do |author_ids, loader|
         Book.joins(:author).
           where(authors: { id: author_ids }).
-          each { |book| loader.call(book.id, book) }
+          each { |book| loader.call(book.author_id) { |memo| memo << book } }
       end
     end
 

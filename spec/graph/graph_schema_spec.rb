@@ -51,6 +51,7 @@ describe GraphSchema do
       end
 
       it 'makes n+1 requests' do
+        # Verified using active record logs
         subject
       end
     end
@@ -72,7 +73,7 @@ describe GraphSchema do
       end
 
       it 'makes 1 query' do
-        # The resolved object is a little borked, but only 1 query is performed based on the logs
+        # Verified using active record logs
         subject
       end
     end
