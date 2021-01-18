@@ -6,19 +6,19 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-lemony_snicket, frank_herbert = Author.create([
-  { name: 'Lemony Snicket' },
+madeline_miller, frank_herbert = Author.create([
+  { name: 'Madeline Miller' },
   { name: 'Frank Herbert' },
 ])
 
-bad_beginning, reptile_room, dune, dune_messiah = Book.create([{
-  author: lemony_snicket,
-  title: 'The Bad Beginning',
-  published_at: DateTime.parse("1999-01-01T00:00:00-05:00")
+the_song_of_achilles, reptile_room, dune, dune_messiah = Book.create([{
+  author: madeline_miller,
+  title: 'The Song of Achilles',
+  published_at: DateTime.parse("2011-01-01T00:00:00-05:00")
 }, {
-  author: lemony_snicket,
-  title: 'The Reptile Room',
-  published_at: DateTime.parse("1999-02-01T00:00:00-05:00")
+  author: madeline_miller,
+  title: 'Circe',
+  published_at: DateTime.parse("2018-02-01T00:00:00-05:00")
 }, {
   author: frank_herbert,
   title: 'Dune',
